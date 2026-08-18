@@ -1,0 +1,42 @@
+{
+  "title": "Houzz Professional Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "location": {
+      "title": "Location",
+      "type": "string",
+      "description": "Location slug (e.g., 'New-York-NY', 'Los-Angeles-CA')",
+      "default": "New-York-NY",
+      "editor": "textfield"
+    },
+    "category": {
+      "title": "Professional Category",
+      "type": "string",
+      "description": "Category slug (e.g., 'architects-and-building-designers', 'interior-designers', 'general-contractors')",
+      "default": "architects-and-building-designers",
+      "editor": "textfield"
+    },
+    "maxResults": {
+      "title": "Maximum Results",
+      "type": "integer",
+      "description": "Maximum number of professionals to scrape",
+      "default": 50,
+      "minimum": 1,
+      "maximum": 10000,
+      "prefill": 10,
+      "editor": "number"
+    },
+    "proxyConfiguration": {
+      "title": "Proxy Configuration",
+      "type": "object",
+      "description": "Proxy settings (recommended: RESIDENTIAL group for best success rate)",
+      "prefill": {
+        "useApifyProxy": true,
+        "apifyProxyGroups": ["RESIDENTIAL"]
+      },
+      "editor": "proxy"
+    }
+  },
+  "required": ["location", "category"]
+}
