@@ -41,11 +41,14 @@ async def fetch(url: str, proxy_url: Optional[str] = None, max_retries: int = 3)
         'Upgrade-Insecure-Requests': '1',
     }
     
-    proxies = {'http://': proxy_url, 'https://': proxy_url} if proxy_url else None
+    # httpx uses mounts for proxies, not proxies dict
+    client_kwargs = {'timeout': 90.0, 'follow_redirects': True}
+    if proxy_url:
+        client_kwargs['proxy'] = proxy_url
     
     for attempt in range(max_retries):
         try:
-            async with httpx.AsyncClient(proxies=proxies, timeout=90.0, follow_redirects=True) as client:
+            async with httpx.AsyncClient(**client_kwargs) as client:
                 response = await client.get(url, headers=headers)
                 response.raise_for_status()
                 
